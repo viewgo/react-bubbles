@@ -8,18 +8,26 @@ import { axiosWithAuth } from "../axiosWithAuth";
 
 const BubblePage = () => {
   const [colorList, setColorList] = useState([]);
+  const [trigger, setTrigger] = useState(false);
+
+  useEffect(() => {
+    console.log("CHANGE TRIGGERED!");
+    getData();
+  }, [trigger]);
 
   const getData = () => {
     axiosWithAuth()
-      .get(`http://localhost:5000/api/friends`)
+      .get(`http://localhost:5000/api/colors`)
       .then(response => {
         console.log("response", response);
-        setData(response.data);
+        setColorList(response.data);
       })
       .catch(error => {
         console.log("error", error);
       });
   };
+
+  console.log(colorList);
 
   return (
     <>
