@@ -29,13 +29,17 @@ const BubblePage = () => {
 
   const triggerChange = () => {
     setTrigger(!trigger);
-  }
+  };
 
   console.log(colorList);
 
   return (
     <>
-      <ColorList triggerChange={triggerChange} colors={colorList} updateColors={setColorList} />
+      <ColorList
+        triggerChange={triggerChange}
+        colors={colorList}
+        updateColors={setColorList}
+      />
       <Bubbles colors={colorList} />
     </>
   );
