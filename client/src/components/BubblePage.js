@@ -4,14 +4,42 @@ import axios from "axios";
 import Bubbles from "./Bubbles";
 import ColorList from "./ColorList";
 
+import { axiosWithAuth } from "../axiosWithAuth";
+
 const BubblePage = () => {
   const [colorList, setColorList] = useState([]);
-  // fetch your colors data from the server when the component mounts
-  // set that data to the colorList state property
+  const [trigger, setTrigger] = useState(false);
+
+  useEffect(() => {
+    console.log("CHANGE TRIGGERED!");
+    getData();
+  }, [trigger]);
+
+  const getData = () => {
+    axiosWithAuth()
+      .get(`http://localhost:5000/api/colors`)
+      .then(response => {
+        console.log("response", response);
+        setColorList(response.data);
+      })
+      .catch(error => {
+        console.log("error", error);
+      });
+  };
+
+  const triggerChange = () => {
+    setTrigger(!trigger);
+  };
+
+  console.log(colorList);
 
   return (
     <>
-      <ColorList colors={colorList} updateColors={setColorList} />
+      <ColorList
+        triggerChange={triggerChange}
+        colors={colorList}
+        updateColors={setColorList}
+      />
       <Bubbles colors={colorList} />
     </>
   );
